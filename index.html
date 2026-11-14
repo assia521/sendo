@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f2">
+  <meta name="description" content="Sendo — مساحة بسيطة لمشاركة لحظاتك.">
+  <title>Sendo — شارك لحظتك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="config.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Sendo الصفحة الرئيسية">
+        <span class="logo-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-word">sendo<span class="brand-dot">.</span></span>
+      </a>
+      <label class="search-box"><span class="search-icon">⌕</span><input id="searchInput" type="search" placeholder="ابحث في المنشورات" aria-label="ابحث في المنشورات"><kbd>⌘ K</kbd></label>
+      <div class="header-actions"><button class="icon-button" id="themeButton" aria-label="تبديل المظهر" title="تبديل المظهر">◐</button><button class="avatar" id="accountButton" aria-label="الحساب">س</button></div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="side-user"><div class="avatar large" id="sideAvatar">س</div><div><strong id="sideName">مرحباً بك</strong><span id="sideHandle">مساحتك لمشاركة اللحظات</span></div></div>
+        <nav class="main-nav" aria-label="التنقل"><a class="nav-item active" href="#home"><span>⌂</span> الرئيسية</a><a class="nav-item" href="#discover"><span>✳</span> استكشف</a><a class="nav-item" href="#saved"><span>♡</span> المحفوظات</a></nav>
+        <button class="primary-button side-compose" id="sideCompose"><span>＋</span> منشور جديد</button>
+        <div class="side-note"><span class="note-spark">✳</span><p>لحظاتك الصغيرة<br>تستحق أن تُشارك.</p><span class="note-brand">sendo</span></div>
+        <div class="side-footer"><span class="status-dot"></span><span id="connectionLabel">وضع المعاينة</span><a href="README.md">الإعداد</a></div>
+      </aside>
+
+      <main class="feed-column">
+        <div class="mobile-heading"><div><p class="eyebrow">مساحة دافئة لك</p><h1>أهلاً، <span id="greetingName">صديقنا</span> <span class="wave">✦</span></h1></div><button class="avatar" id="mobileAccount" aria-label="الحساب">س</button></div>
+        <section class="composer card" id="composer">
+          <div class="composer-top"><div class="avatar" id="composerAvatar">س</div><textarea id="postText" rows="2" maxlength="1000" placeholder="ما الذي تودّ مشاركته اليوم؟" aria-label="اكتب منشورك"></textarea></div>
+          <div id="attachmentPreview" class="attachment-preview" hidden></div>
+          <div class="recording-row" id="recordingRow" hidden><span class="recording-pulse"></span><span>جارٍ التسجيل</span><time id="recordingTime">00:00</time><button class="text-button" id="stopRecording">إيقاف</button><button class="text-button muted" id="cancelRecording">إلغاء</button></div>
+          <div class="composer-bottom"><div class="composer-tools"><button class="tool-button" id="imageButton"><span class="tool-icon photo">▧</span><span>صورة</span></button><button class="tool-button" id="videoButton"><span class="tool-icon video">▷</span><span>فيديو</span></button><button class="tool-button" id="audioButton"><span class="tool-icon audio">♫</span><span>تسجيل صوتي</span></button><input type="file" id="imageInput" accept="image/*" hidden><input type="file" id="videoInput" accept="video/*" hidden></div><button class="primary-button publish-button" id="publishButton">انشر <span>↗</span></button></div>
+        </section>
+
+        <div class="feed-heading"><div><p class="eyebrow">مساحة المجتمع</p><h2>آخر الحكايات</h2></div><button class="filter-button" id="sortButton">الأحدث <span>⌄</span></button></div>
+        <div id="feed" class="feed" aria-live="polite"></div>
+      </main>
+
+      <aside class="right-column">
+        <section class="welcome-card"><div class="welcome-top"><span class="welcome-chip">مساحة للجميع</span><span class="welcome-spark">✳</span></div><h2>مرحباً بك في<br><span>Sendo</span></h2><p>مكانك لمشاركة ما تحب، بالطريقة التي تحبها.</p><div class="welcome-orbit orbit-one"></div><div class="welcome-orbit orbit-two"></div><span class="welcome-smile">☺</span></section>
+        <section class="trending card"><div class="section-title"><div><p class="eyebrow">حديث المجتمع</p><h3>مواضيع رائجة</h3></div><span class="trending-icon">↗</span></div><a class="trend-row" href="#discover"><span class="trend-number">01</span><span><strong>لحظات اليوم</strong><small>١٢٨ مشاركة</small></span><span class="trend-arrow">↗</span></a><a class="trend-row" href="#discover"><span class="trend-number">02</span><span><strong>من حول العالم</strong><small>٨٦ مشاركة</small></span><span class="trend-arrow">↗</span></a><a class="trend-row" href="#discover"><span class="trend-number">03</span><span><strong>إبداعك اليوم</strong><small>٤٣ مشاركة</small></span><span class="trend-arrow">↗</span></a></section>
+        <div class="right-footer"><a href="README.md">عن Sendo</a><span>·</span><a href="README.md#privacy">الخصوصية</a><span>·</span><span>© Sendo 2026</span></div>
+      </aside>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="التنقل"><a class="mobile-nav-item active" href="#home"><span>⌂</span>الرئيسية</a><a class="mobile-nav-item" href="#discover"><span>✳</span>استكشف</a><button class="mobile-add" id="mobileCompose" aria-label="منشور جديد">＋</button><a class="mobile-nav-item" href="#saved"><span>♡</span>المحفوظات</a><button class="mobile-nav-item mobile-account" id="mobileAccountNav"><span>◉</span>حسابي</button></nav>
+
+  <dialog id="authDialog" class="modal"><form method="dialog" class="modal-close-wrap"><button class="modal-close" aria-label="إغلاق">×</button></form><div class="modal-brand"><span class="logo-mark"><span></span><span></span><span></span></span><span class="brand-word">sendo<span class="brand-dot">.</span></span></div><p class="eyebrow">أهلاً بك في مساحتك</p><h2 id="authTitle">انضم إلى Sendo</h2><p class="modal-description" id="authDescription">أنشئ حساباً وابدأ بمشاركة لحظاتك.</p><form id="authForm"><label class="field-label" id="nameLabel">الاسم<input id="authName" autocomplete="name" placeholder="اسمك"></label><label class="field-label">البريد الإلكتروني<input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label><label class="field-label">كلمة المرور<input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="٦ أحرف على الأقل" required></label><p class="form-error" id="authError" hidden></p><button class="primary-button auth-submit" id="authSubmit">إنشاء حساب</button></form><p class="auth-switch"><span id="authSwitchText">لديك حساب بالفعل؟</span> <button id="authSwitch" class="link-button" type="button">تسجيل الدخول</button></p><button class="guest-button" id="continueGuest" type="button">المتابعة بوضع المعاينة</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
